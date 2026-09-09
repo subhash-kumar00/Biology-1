@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ബയോളജി സെറ്റ് 1 - മോഡൽ എക്സാം</title>
+  <!-- Tailwind CSS & Google Fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Noto+Sans+Malayalam:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- html2pdf.js for Client-side Scorecard PDF Generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+    body { font-family: 'Noto Sans Malayalam', 'Manrope', sans-serif; }
+    .custom-scroll::-webkit-scrollbar { width: 6px; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col justify-between">
+
+  <!-- Header -->
+  <header class="bg-slate-800/95 backdrop-blur border-b border-slate-700 px-6 py-4 flex items-center justify-between sticky top-0 z-50">
+    <div class="flex items-center space-x-3">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-600 flex items-center justify-center font-black text-xl shadow-lg">
+        PSC
+      </div>
+      <div>
+        <h1 class="font-bold text-lg text-emerald-400 leading-tight">ബയോളജി (Biology) - സെറ്റ് 1</h1>
+        <p class="text-xs text-slate-400">Special Notes by Subhash Kumar | 25 ചോദ്യങ്ങൾ (25 മിനിറ്റ് മോഡൽ എക്സാം)</p>
+      </div>
+    </div>
+    <div id="userInfoHeader" class="hidden text-right">
+      <span id="displayUser" class="text-sm font-semibold text-slate-200"></span>
+      <p class="text-xs text-emerald-400 font-mono">+1.00 / -0.33 Mark Scheme</p>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="flex-1 flex flex-col items-center justify-center p-4 sm:p-6 w-full max-w-6xl mx-auto">
+    
+    <!-- Step 1: Model Exam Registration Card -->
+    <div id="loginCard" class="w-full max-w-md bg-slate-800 border border-slate-700 rounded-2xl p-8 shadow-2xl">
+      <div class="text-center mb-6">
+        <span class="inline-block p-3 rounded-2xl bg-emerald-500/10 text-emerald-400 mb-2">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        </span>
+        <h2 class="text-2xl font-bold text-white">മോഡൽ എക്സാം</h2>
+        <p class="text-sm text-slate-400 mt-1">മൊബൈൽ നമ്പർ നൽകി പരീക്ഷ ആരംഭിക്കുക. ആദ്യ ശ്രമത്തിലെ മാർക്ക് മാത്രമാണ് റാങ്ക് ലിസ്റ്റിൽ ഉൾപ്പെടുത്തൂ.</p>
+      </div>
+
+      <form id="loginForm" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">പൂർണ്ണമായ പേര്</label>
+          <input type="text" id="candName" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 transition" placeholder="ഉദാ: സുഭാഷ് കുമാർ">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">മൊബൈൽ നമ്പർ (10 അക്കം)</label>
+          <input type="tel" id="candPhone" pattern="[0-9]{10}" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 transition font-mono tracking-wider" placeholder="10 അക്ക മൊബൈൽ നമ്പർ">
+        </div>
+
+        <div class="bg-slate-900/70 p-4 rounded-xl border border-slate-700 text-xs space-y-1 text-slate-300">
+          <p class="font-bold text-emerald-400">പരീക്ഷാ നിർദ്ദേശങ്ങൾ:</p>
+          <p class="text-amber-300 font-semibold">• അനുവദിച്ച സമയം: 25 മിനിറ്റ് (Auto Submit)</p>
+          <p>• ശരിയുത്തരം: +1 മാർക്ക് | തെറ്റായ ഉത്തരം: -0.33 മാർക്ക്</p>
+          <p>• ഉത്തരം നൽകാത്തവയ്ക്ക് (Skip) മാർക്ക് കുറയ്ക്കില്ല</p>
+          <p class="text-rose-400 font-semibold">• കുറഞ്ഞത് 7 മാർക്ക് നേടിയാൽ മാത്രമേ ഒറിജിനൽ PDF ലഭിക്കൂ</p>
+        </div>
+
+        <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-slate-950 font-bold rounded-xl transition transform active:scale-95 shadow-lg shadow-emerald-500/20">
+          പരീക്ഷ ആരംഭിക്കുക
+        </button>
+      </form>
+
+      <div class="mt-5 text-center">
+        <button id="viewRankBtn" type="button" class="text-xs text-slate-400 hover:text-emerald-400 underline">നിലവിലെ ലൈവ് റാങ്ക് ലിസ്റ്റ് കാണുക</button>
+      </div>
+    </div>
+
+    <!-- Step 2: Quiz Question Screen -->
+    <div id="quizScreen" class="w-full hidden flex-col space-y-4">
+      <div class="bg-slate-800 border border-slate-700 rounded-xl p-4 flex flex-wrap items-center justify-between gap-4 shadow-md">
+        <div class="flex items-center space-x-3">
+          <span class="px-3 py-1 bg-emerald-500/20 text-emerald-300 font-bold rounded-lg text-sm" id="questionBadge">ചോദ്യം 1 / 25</span>
+          <span class="text-xs text-slate-400" id="answeredCountTxt">പൂർത്തിയാക്കിയത്: 0/25</span>
+        </div>
+
+        <!-- 25 Minute Exam Timer Badge -->
+        <div class="flex items-center space-x-2 bg-slate-900/90 border border-slate-700 px-3.5 py-1 rounded-xl shadow-inner">
+          <svg class="w-4 h-4 text-emerald-400 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <span class="text-xs font-semibold text-slate-400">സമയം:</span>
+          <span id="examTimer" class="font-mono text-sm font-black text-emerald-400">25:00</span>
+        </div>
+
+        <button id="finishMidBtn" class="px-3.5 py-1.5 bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 text-xs font-semibold rounded-lg transition">
+          പരീക്ഷ അവസാനിപ്പിക്കുക (Finish Exam)
+        </button>
+      </div>
+
+      <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 sm:p-8 shadow-2xl">
+        <div class="mb-6">
+          <h2 id="qText" class="text-lg sm:text-xl font-semibold leading-relaxed text-slate-100 whitespace-pre-line"></h2>
+        </div>
+
+        <div id="optionsContainer" class="space-y-3 mb-8"></div>
+
+        <div class="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-700">
+          <button id="prevBtn" class="px-5 py-2.5 bg-slate-700 hover:bg-slate-600 text-slate-200 text-sm font-semibold rounded-xl transition disabled:opacity-40">
+            ‹ Previous
+          </button>
+          <div class="flex items-center space-x-2">
+            <button id="skipBtn" class="px-4 py-2.5 bg-slate-700/50 hover:bg-slate-700 text-slate-300 text-sm rounded-xl border border-slate-600 transition">
+              Skip Question
+            </button>
+            <button id="nextBtn" class="px-6 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-sm rounded-xl transition transform active:scale-95 shadow-md">
+              Next ›
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-slate-800/80 border border-slate-700 rounded-xl p-3">
+        <p class="text-xs font-semibold text-slate-400 mb-2">ചോദ്യങ്ങളിലേക്ക് നേരിട്ട് പോകാൻ ക്ലിക്ക് ചെയ്യുക:</p>
+        <div id="paletteContainer" class="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto custom-scroll pr-1"></div>
+      </div>
+    </div>
+
+    <!-- Step 3: Result, Explanations & Downloads -->
+    <div id="resultScreen" class="w-full hidden space-y-6">
+      
+      <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 sm:p-8 shadow-2xl text-center">
+        <h2 class="text-2xl sm:text-3xl font-black text-emerald-400 mb-1">പരീക്ഷാ ഫലം (Exam Result)</h2>
+        <p class="text-sm text-slate-400 mb-6" id="resultCandidateInfo"></p>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mx-auto mb-6">
+          <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-700">
+            <span class="text-xs text-slate-400 block font-semibold uppercase">നെറ്റ് സ്കോർ</span>
+            <span id="finalScore" class="text-3xl font-black text-emerald-400 font-mono">0.00</span>
+            <span class="text-[10px] text-slate-500 block">25 ൽ</span>
+          </div>
+          <div class="bg-slate-900/80 p-4 rounded-xl border border-emerald-900/50">
+            <span class="text-xs text-emerald-400 block font-semibold uppercase">ശരി (+1)</span>
+            <span id="correctCount" class="text-2xl font-bold text-emerald-400 font-mono">0</span>
+          </div>
+          <div class="bg-slate-900/80 p-4 rounded-xl border border-rose-900/50">
+            <span class="text-xs text-rose-400 block font-semibold uppercase">തെറ്റ് (-0.33)</span>
+            <span id="wrongCount" class="text-2xl font-bold text-rose-400 font-mono">0</span>
+          </div>
+          <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-700">
+            <span class="text-xs text-slate-400 block font-semibold uppercase">Skip ചെയ്തവ</span>
+            <span id="skipCount" class="text-2xl font-bold text-slate-300 font-mono">0</span>
+          </div>
+        </div>
+
+        <div id="sheetStatus" class="text-xs text-emerald-400 mb-4 animate-pulse">സ്കോർ ഗൂഗിൾ ഷീറ്റിലേക്ക് രേഖപ്പെടുത്തുന്നു...</div>
+
+        <!-- 7 Mark Cut-off Warning Box -->
+        <div id="pdfLockNotice" class="hidden max-w-md mx-auto mb-5 p-3.5 bg-rose-950/40 border border-rose-800/80 rounded-xl text-xs text-rose-300">
+          ⚠️ <strong>ശ്രദ്ധിക്കുക:</strong> കുറഞ്ഞത് 7 മാർക്ക് നേടിയാൽ മാത്രമേ ഔദ്യോഗിക നോട്ടുകൾ PDF ഡൗൺലോഡ് ചെയ്യാൻ സാധിക്കൂ. നിങ്ങളുടെ നിലവിലെ സ്കോർ 7-ൽ താഴെയാണ്.
+        </div>
+
+        <div class="flex flex-wrap items-center justify-center gap-3">
+          <!-- Download Button (Visible only if Score >= 7) -->
+          <a id="originalPdfDownloadLink" href="#" target="_blank" class="hidden px-5 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 text-slate-950 font-black rounded-xl text-sm transition shadow-lg flex items-center space-x-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"></path></svg>
+            <span>ഔദ്യോഗിക നോട്ടുകൾ PDF ഡൗൺലോഡ് ചെയ്യുക 📥</span>
+          </a>
+
+          <button id="downloadPdfBtn" class="px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl text-sm transition shadow-lg flex items-center space-x-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+            <span>സ്കോർകാർഡ് PDF</span>
+          </button>
+
+          <button id="showLeaderboardBtn" class="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold rounded-xl text-sm transition shadow-lg">
+            ലൈവ് റാങ്ക് ലിസ്റ്റ് കാണുക
+          </button>
+        </div>
+      </div>
+
+      <!-- Printable Solutions Area -->
+      <div id="pdfExportWrapper" class="bg-slate-800 border border-slate-700 rounded-2xl p-6 sm:p-8 shadow-2xl">
+        <div class="border-b border-slate-700 pb-4 mb-6">
+          <h3 class="text-xl font-bold text-emerald-400">ബയോളജി (Biology) സെറ്റ് 1 - സമഗ്ര ഉത്തര സൂചിക</h3>
+          <p class="text-xs text-slate-400 mt-1" id="pdfReportCandidateSubheader">പരീക്ഷാർത്ഥി വിവരങ്ങൾ</p>
+        </div>
+        <div id="solutionsContainer" class="space-y-6"></div>
+      </div>
+    </div>
+
+    <!-- Leaderboard Modal -->
+    <div id="leaderboardModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+      <div class="bg-slate-800 border border-slate-700 rounded-2xl max-w-xl w-full p-6 shadow-2xl flex flex-col max-h-[85vh]">
+        <div class="flex items-center justify-between border-b border-slate-700 pb-4 mb-4">
+          <div>
+            <h3 class="text-xl font-bold text-emerald-400">ലൈവ് റാങ്ക് ലിസ്റ്റ് (Google Sheet)</h3>
+            <p class="text-xs text-slate-400">ആദ്യ ശ്രമത്തിലെ സ്കോർ അടിസ്ഥാനമാക്കി ക്രമീകരിച്ചത്</p>
+          </div>
+          <button id="closeLeaderboardBtn" class="text-slate-400 hover:text-white text-2xl font-bold">&times;</button>
+        </div>
+        <div id="leaderboardLoading" class="py-10 text-center text-sm text-slate-400">ഗൂഗിൾ ഷീറ്റിൽ നിന്നും റാങ്ക് ലിസ്റ്റ് ശേഖരിക്കുന്നു...</div>
+        <div class="flex-1 overflow-y-auto custom-scroll pr-1 hidden" id="leaderboardTableWrapper">
+          <table class="w-full text-left text-sm">
+            <thead class="text-xs uppercase bg-slate-900/80 text-slate-400 sticky top-0">
+              <tr>
+                <th class="py-2.5 px-3">റാങ്ക്</th>
+                <th class="py-2.5 px-3">പേര്</th>
+                <th class="py-2.5 px-3">മൊബൈൽ</th>
+                <th class="py-2.5 px-3 text-right">മാർക്ക്</th>
+              </tr>
+            </thead>
+            <tbody id="leaderboardBody" class="divide-y divide-slate-700"></tbody>
+          </table>
+        </div>
+        <div class="pt-4 border-t border-slate-700 mt-4 text-center">
+          <button id="closeLeaderboardBtn2" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-xs font-semibold text-white">
+            ക്ലോസ് ചെയ്യുക
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="text-center py-4 text-xs text-slate-500 border-t border-slate-800">
+    ബയോളജി (Biology) - സെറ്റ് 1 | Special Notes by Subhash Kumar
+  </footer>
+
+  <script>
+    // =========================================================================
+    // ⚠️ 1. ഈ 3 വേരിയബിളുകൾ മാത്രം നിങ്ങളുടെ വിവരങ്ങൾ വെച്ച് മാറ്റുക:
+    // =========================================================================
+    const GOOGLE_SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzz16_cHXqIxioiMN1INEK6z_29Q7nnroM02tNgHapEx3ng8ngIgGmXOMXO3icNydE/exec"; // നിങ്ങളുടെ Apps Script Web App URL
+    const QUIZ_SHEET_NAME = "Biology_Set1"; // നിങ്ങളുടെ ഗൂഗിൾ ഷീറ്റിൽ ഈ പേജിലേക്ക് (Tab) ഡാറ്റ തനിയെ പോകും
+    const ORIGINAL_PDF_URL = "https://drive.google.com/file/d/1tPksbYVWeSLyfHNFwHdRTCXjjszjh3eW/view?usp=drivesdk"; // ചോദ്യങ്ങളുടെ PDF ഡ്രൈവ് ലിങ്ക്
+
+    // 25 Questions directly from the Biology Set 1 PDF
+    const questionsData = [
+      { q: "മനുഷ്യ ശരീരത്തിലെ ഏറ്റവും കടുപ്പമേറിയതും പല്ലിന്റെ ഏറ്റവും പുറമെയുള്ളതുമായ ആവരണം ഏതാണ്?", options: ["ഡെന്റീൻ", "ഇനാമൽ", "സിമന്റം", "പൾപ്പ്"], ans: 1, exp: "പല്ലിന്റെ ബാഹ്യാവരണമായ ഇനാമൽ (Enamel) ആണ് മനുഷ്യശരീരത്തിലെ ഏറ്റവും കടുപ്പമേറിയ ഭാഗം[cite: 13]. കാൽസ്യം ഫോസ്ഫേറ്റ്, ഹൈഡ്രോക്സി അപറ്റൈറ്റ് എന്നിവയാലാണ് ഇത് നിർമ്മിക്കപ്പെട്ടിരിക്കുന്നത്[cite: 13]." },
+      { q: "മനുഷ്യന്റെ കണ്ണിന്റെ ഘടനയെക്കുറിച്ചുള്ള പ്രസ്താവനകൾ പരിശോധിക്കുക:\n1. കോർണിയയ്ക്കും ലെൻസിനും ഇടയിലുള്ള അറയിൽ ജലീയ ദ്രവവും ലെൻസിനും റെറ്റിനയ്ക്കും ഇടയിൽ ജെല്ലി പോലുള്ള വിട്രിയസ് ഹ്യൂമറും നിറഞ്ഞിരിക്കുന്നു.\n2. വസ്തുക്കളുടെ യഥാർത്ഥവും തലതിരിഞ്ഞതുമായ പ്രതിബിംബമാണ് റെറ്റിനയിൽ പതിക്കുന്നത്.\n3. കണ്ണിന്റെ സുതാര്യമായ പുറംഭാഗമായ കോർണിയയിലേക്ക് രക്തക്കുഴലുകൾ വൻതോതിൽ രക്തം എത്തിക്കുന്നു.", options: ["1, 2 ശരിയാണ്", "1, 3 ശരിയാണ്", "2, 3 ശരിയാണ്", "എല്ലാ പ്രസ്താവനകളും ശരിയാണ്"], ans: 0, exp: "മൂന്നാമത്തെ പ്രസ്താവന തെറ്റാണ്[cite: 13]. കോർണിയ രക്തക്കുഴലുകൾ ഇല്ലാത്ത (Avascular) ശരീരഭാഗമാണ്; അന്തരീക്ഷവായുവിലെ ഓക്സിജൻ നേരിട്ട് ആഗിരണം ചെയ്യുകയാണ് ചെയ്യുന്നത്[cite: 13]. 1, 2 ശരിയാണ്[cite: 13]." },
+      { q: "കണ്ണിലെ അന്ധബിന്ദുവിനെയും പീതബിന്ദുവിനെയും കുറിച്ചുള്ള പ്രസ്താവനകൾ ഏവ?\n1. പ്രകാശഗ്രാഹി കോശങ്ങൾ ഏറ്റവും കൂടുതൽ കേന്ദ്രീകരിച്ചിരിക്കുന്നതും ഏറ്റവും വ്യക്തമായ കാഴ്ച നൽകുന്നതുമായ ഭാഗമാണ് പീതബിന്ദു അഥവാ ഫോവിയ.\n2. പ്രകാശഗ്രാഹി കോശങ്ങൾ ഒട്ടുമില്ലാത്തതും കാഴ്ച സാധ്യമല്ലാത്തതുമായ നേത്രനാഡി ആരംഭിക്കുന്ന ഭാഗമാണ് അന്ധബിന്ദു.\n3. അന്ധബിന്ദുവിൽ പ്രതിബിംബം പതിച്ചാൽ മാത്രമേ നിറങ്ങൾ തിരിച്ചറിയാൻ കഴിയൂ.", options: ["1, 3 ശരിയാണ്", "1, 2 ശരിയാണ്", "2, 3 ശരിയാണ്", "എല്ലാ പ്രസ്താവനകളും ശരിയാണ്"], ans: 1, exp: "മൂന്നാമത്തെ പ്രസ്താവന തെറ്റാണ്[cite: 13]. അന്ധബിന്ദുവിൽ പ്രകാശഗ്രാഹി കോശങ്ങൾ ഇല്ലാത്തതിനാൽ അവിടെ കാഴ്ച സാധ്യമല്ല[cite: 13]. 1, 2 ശരിയാണ്[cite: 13]." },
+      { q: "മനുഷ്യശരീരത്തിലെ ഏറ്റവും നീളം കൂടിയതും ശക്തവുമായ അസ്ഥി ഏതാണ്?", options: ["ടിബിയ", "തുടയെല്ല് / ഊർവ്വാസ്ഥി", "ഫിബുല", "ഹ്യൂമറസ്"], ans: 1, exp: "തുടയെല്ല് അഥവാ ഫീമർ (Femur) ആണ് മനുഷ്യ ശരീരത്തിലെ ഏറ്റവും നീളം കൂടിയതും ബലമേറിയതുമായ അസ്ഥി[cite: 13]." },
+      { q: "കണ്ണിന്റെ സമഞ്ജന ക്ഷമതയെയും സിലിയറി പേശികളെയും സംബന്ധിച്ച പ്രസ്താവനകൾ ഏവ?\n1. അടുത്തുള്ള വസ്തുക്കളെ കാണുമ്പോൾ സിലിയറി പേശികൾ സങ്കോചിക്കുകയും ലെൻസിന്റെ വക്രത വർദ്ധിക്കുകയും ചെയ്യുന്നു.\n2. അകലെയുള്ള വസ്തുക്കളെ കാണുമ്പോൾ സിലിയറി പേശികൾ അയയുകയും ലെൻസ് പരന്നതാവുകയും ചെയ്യുന്നു.\n3. കണ്ണിലെ ലെൻസ് ഒരു കോൺകേവ് ലെൻസാണ്.", options: ["1, 3 ശരിയാണ്", "1, 2 ശരിയാണ്", "2, 3 ശരിയാണ്", "എല്ലാ പ്രസ്താവനകളും ശരിയാണ്"], ans: 1, exp: "മൂന്നാമത്തെ പ്രസ്താവന തെറ്റാണ്[cite: 13]. കണ്ണിനുള്ളിലുള്ളത് സുതാര്യവും വഴക്കമുള്ളതുമായ കോൺവെക്സ് ലെൻസാണ് (Biconvex lens)[cite: 13]. 1, 2 ശരിയാണ്[cite: 13]." },
+      { q: "മനുഷ്യ ശരീരത്തിലെ ഏറ്റവും ചെറിയ അസ്ഥിയായ സ്റ്റേപ്പിസ് സ്ഥിതിചെയ്യുന്നത് എവിടെയാണ്?", options: ["മൂക്ക്", "മധ്യകർണ്ണം", "നാക്ക്", "കണ്ണിലെ കൃഷ്ണമണി"], ans: 1, exp: "മധ്യകർണ്ണത്തിലെ ശ്രവണാസ്ഥികളിൽ (Ear ossicles) ഏറ്റവും ചെറുതാണ് സ്റ്റേപ്പിസ് (Stapes)[cite: 13]. മാലിയസ്, ഇൻകസ്, സ്റ്റേപ്പിസ് എന്നിവയാണ് മൂന്ന് അസ്ഥികൾ[cite: 13]." },
+      { q: "മനുഷ്യന്റെ നാക്കിലെ രസമുകുളങ്ങളെയും രുചികളെയും കുറിച്ചുള്ള പ്രസ്താവനകൾ ഏവ?\n1. മധുരം, പുളി, ഉപ്പ്, കൈപ്പ്, ഉമാമി എന്നിവയാണ് നാക്ക് തിരിച്ചറിയുന്ന 5 പ്രാഥമിക രുചികൾ.\n2. നാക്കിലെ പാപ്പിലകൾക്കുള്ളിലാണ് രസമുകുളങ്ങൾ സ്ഥിതിചെയ്യുന്നത്.\n3. എരിവ് എന്നത് ഒരു രുചിയാണ്, അത് പ്രത്യേക രസമുകുളങ്ങളാലാണ് തിരിച്ചറിയുന്നത്.", options: ["1, 2 ശരിയാണ്", "1, 3 ശരിയാണ്", "2, 3 ശരിയാണ്", "എല്ലാ പ്രസ്താവനകളും ശരിയാണ്"], ans: 0, exp: "മൂന്നാമത്തെ പ്രസ്താവന തെറ്റാണ്[cite: 13]. എരിവ് എന്നത് ഒരു രുചിയല്ല; അത് നാക്കിലെ വേദനയുടെയും ചൂടിന്റെയും സംവേദനമാണ്[cite: 13]. 1, 2 ശരിയാണ്[cite: 13]." },
+      { q: "ചെവിയുടെ ഘടനയെയും കേൾവി പ്രക്രിയയെയും സംബന്ധിച്ച പ്രസ്താവനകൾ ഏവ?\n1. ബാഹ്യകർണ്ണം ശബ്ദതരംഗങ്ങളെ ശേഖരിച്ച് കർണ്ണനാളി വഴി കർണ്ണപടത്തിലേക്ക് എത്തിക്കുന്നു.\n2. മധ്യകർണ്ണത്തിലെ മാലിയസ്, ഇൻകസ്, സ്റ്റേപ്പിസ് എന്നീ അസ്ഥികൾ ശബ്ദവീചികളെ വർദ്ധിപ്പിച്ചു നൽകുന്നു.\n3. ആന്തരകർണ്ണത്തിലെ കോക്ലിയയ്ക്കുള്ളിലുള്ള ഓർഗൻ ഓഫ് കോർട്ടിയിലെ രോമകോശങ്ങളാണ് ശബ്ദവീചികളെ നാഡീ ആവേഗങ്ങളാക്കി മാറ്റുന്നത്.", options: ["1, 2 ശരിയാണ്", "2, 3 ശരിയാണ്", "1, 3 ശരിയാണ്", "1, 2, 3 പ്രസ്താവനകളും ശരിയാണ്"], ans: 3, exp: "ചെവിയുടെ ബാഹ്യ, മധ്യ, ആന്തര കർണ്ണ ഭാഗങ്ങളുടെ ധർമ്മങ്ങളും കേൾവി പ്രക്രിയയും വ്യക്തമാക്കുന്ന മൂന്ന് പ്രസ്താവനകളും ശരിയാണ്[cite: 13]." },
+      { q: "കണ്ണിൽ പ്രവേശിക്കുന്ന പ്രകാശത്തിന്റെ അളവ് നിയന്ത്രിക്കുന്ന കൺപോളയ്ക്ക് പിന്നിലുള്ള വിടവ് ഏത് പേരിൽ അറിയപ്പെടുന്നു?", options: ["കോർണിയ", "പ്യൂപ്പിൾ / കൃഷ്ണമണി", "റെറ്റിന", "സിലിയറി പേശി"], ans: 1, exp: "ഐറിസിന്റെ (Iris) മധ്യഭാഗത്തുള്ള സുഷിരമാണ് കൃഷ്ണമണി (Pupil)[cite: 13]. പ്രകാശതീവ്രതയ്ക്കനുസരിച്ച് ഐറിസിലെ പേശികൾ കൃഷ്ണമണിയുടെ വിസ്തൃതി ക്രമീകരിക്കുന്നു[cite: 13]." },
+      { q: "മനുഷ്യനിലെ പല്ലുകളുടെ തരങ്ങളെക്കുറിച്ചുള്ള പ്രസ്താവനകൾ ഏവ?\n1. ആഹാരം കടിച്ചു മുറിക്കാൻ സഹായിക്കുന്ന ഉളിപ്പല്ലുകൾ ആകെ 8 എണ്ണമുണ്ട്.\n2. മാംസാഹാരം കീറിമുറിക്കാൻ സഹായിക്കുന്ന കോമ്പല്ലുകൾ ആകെ 4 എണ്ണമുണ്ട്.\n3. പ്രായപൂർത്തിയായ ഒരാളിൽ പാൽപ്പല്ലുകളുടെ എണ്ണം 32 ആണ്.", options: ["1, 2 ശരിയാണ്", "1, 3 ശരിയാണ്", "2, 3 ശരിയാണ്", "എല്ലാ പ്രസ്താവനകളും ശരിയാണ്"], ans: 0, exp: "മൂന്നാമത്തെ പ്രസ്താവന തെറ്റാണ്[cite: 13]. കുട്ടികളിൽ വരുന്ന താൽക്കാലിക പാൽപ്പല്ലുകളുടെ (Milk teeth) എണ്ണം 20 ആണ് (32 സ്ഥിരദന്തങ്ങളാണ്)[cite: 13]. 1, 2 ശരിയാണ്[cite: 13]." },
+      { q: "മങ്ങിയ വെളിച്ചത്തിൽ കാഴ്ച സാധ്യമാക്കാൻ സഹായിക്കുന്ന റെറ്റിനയിലെ പ്രകാശഗ്രാഹി കോശങ്ങൾ ഏവ?", options: ["കോൺ കോശങ്ങൾ", "റോഡ് കോശങ്ങൾ", "ഫോവിയ കോശങ്ങൾ", "ഗാംഗ്ലിയോൺ കോശങ്ങൾ"], ans: 1, exp: "റോഡ് കോശങ്ങളിലെ (Rod cells) റോഡോപ്സിൻ എന്ന വർണ്ണകമാണ് മങ്ങിയ വെളിച്ചത്തിലെ കാഴ്ചയ്ക്ക് സഹായിക്കുന്നത്[cite: 13]. കോൺ കോശങ്ങൾ നിറങ്ങളെയും തെളിഞ്ഞ വെളിച്ചത്തെയും തിരിച്ചറിയുന്നു[cite: 13]." },
+      { q: "മനുഷ്യ ശരീരത്തിലെ അസ്ഥികളുടെ എണ്ണത്തെക്കുറിച്ചുള്ള പ്രസ്താവനകൾ പരിശോധിക്കുക:\n1. പ്രായപൂർത്തിയായ ഒരു മനുഷ്യന്റെ അസ്ഥികൂടത്തിൽ ആകെ 206 അസ്ഥികളാണുള്ളത്.\n2. മനുഷ്യന്റെ മുഖത്ത് ആകെ 14 അസ്ഥികളുണ്ട്.\n3. മനുഷ്യന്റെ ഒരു കയ്യിൽ ആകെ 2 അസ്ഥികൾ മാത്രമേയുള്ളൂ.", options: ["1, 2 ശരിയാണ്", "1, 3 ശരിയാണ്", "2, 3 ശരിയാണ്", "എല്ലാ പ്രസ്താവനകളും ശരിയാണ്"], ans: 0, exp: "മൂന്നാമത്തെ പ്രസ്താവന തെറ്റാണ്[cite: 13]. മനുഷ്യന്റെ ഒരു കയ്യിൽ വിരലുകളും മണിബന്ധവും ഉൾപ്പെടെ ആകെ 30 അസ്ഥികളുണ്ട്[cite: 13]. 1, 2 ശരിയാണ്[cite: 13]." },
+      { q: "അക്ഷാസ്ഥികൂടത്തെയും അനുബന്ധാസ്ഥികൂടത്തെയും കുറിച്ചുള്ള പ്രസ്താവനകൾ ഏവ?\n1. തലയോട്ടി, നട്ടെല്ല്, വാരിയെല്ലുകൾ, മാറെല്ല് എന്നിവ ഉൾപ്പെടുന്ന അക്ഷാസ്ഥികൂടത്തിൽ ആകെ 80 അസ്ഥികളുണ്ട്.\n2. കൈകാലുകളുടെ അസ്ഥികളും തോളെല്ലും ഇടുപ്പെല്ലും ഉൾപ്പെടുന്ന അനുബന്ധാസ്ഥികൂടത്തിൽ 126 അസ്ഥികളുണ്ട്.\n3. മനുഷ്യന്റെ നട്ടെല്ലിൽ പ്രായപൂർത്തിയാകുമ്പോൾ 100 കശേരുക്കൾ കാണപ്പെടുന്നു.", options: ["1, 3 ശരിയാണ്", "1, 2 ശരിയാണ്", "2, 3 ശരിയാണ്", "എല്ലാ പ്രസ്താവനകളും ശരിയാണ്"], ans: 1, exp: "മൂന്നാമത്തെ പ്രസ്താവന തെറ്റാണ്[cite: 13]. പ്രായപൂർത്തിയായ മനുഷ്യന്റെ നട്ടെല്ലിൽ 26 കശേരുക്കളാണുള്ളത് (കുട്ടികളിൽ 33)[cite: 13]. 1, 2 ശരിയാണ്[cite: 13]." },
+      { q: "മറ്റ് അന്തഃസ്രാവി ഗ്രന്ഥികളുടെ പ്രവർത്തനങ്ങളെ നിയന്ത്രിക്കുന്നതിനാൽ 'പ്രധാന ഗ്രന്ഥി' (Master Gland) എന്നറിയപ്പെടുന്ന ഗ്രന്ഥി ഏതാണ്?", options: ["തൈറോയ്ഡ് ഗ്രന്ഥി", "പിറ്റ്യൂറ്ററി ഗ്രന്ഥി", "അഡ്രിനൽ ഗ്രന്ഥി", "പീനിയൽ ഗ്രന്ഥി"], ans: 1, exp: "തലച്ചോറിന്റെ അടിഭാഗത്ത് സ്ഥിതിചെയ്യുന്ന പിറ്റ്യൂറ്ററി ഗ്രന്ഥിയാണ് (Pituitary Gland) മറ്റ് ഗ്രന്ഥികളെ നിയന്ത്രിക്കുന്ന ട്രോപിക് ഹോർമോണുകൾ പുറപ്പെടുവിക്കുന്നത്[cite: 13]." },
+      { q: "പിറ്റ്യൂറ്ററി ഗ്രന്ഥിയുടെ മുൻദളത്തിൽ നിന്നും സ്രവിക്കുന്ന ഹോർമോണുകളെ സംബന്ധിച്ച പ്രസ്താവനകൾ ഏവ?\n1. സൊമാറ്റോട്രോപിൻ (വളർച്ചാ ഹോർമോൺ), തൈറോയ്ഡ് സ്റ്റിമുലേറ്റിംഗ് ഹോർമോൺ (TSH) എന്നിവ മുൻദളമാണ് ഉൽപ്പാദിപ്പിക്കുന്നത്.\n2. ഓക്സിടോസിൻ ഹോർമോൺ മുൻദളത്തിൽ നിന്നാണ് നേരിട്ട് ഉൽപ്പാദിപ്പിക്കപ്പെടുന്നത്.\n3. മുലപ്പാൽ ഉൽപ്പാദനത്തിന് സഹായിക്കുന്ന പ്രൊലാക്റ്റിൻ ഹോർമോൺ മുൻദളത്തിൽ നിന്നാണ് സ്രവിക്കുന്നത്.", options: ["1, 2 ശരിയാണ്", "2, 3 ശരിയാണ്", "1, 3 ശരിയാണ്", "എല്ലാ പ്രസ്താവനകളും ശരിയാണ്"], ans: 2, exp: "രണ്ടാമത്തെ പ്രസ്താവന തെറ്റാണ്[cite: 13]. ഓക്സിടോസിനും വാസോപ്രസ്സിനും ഹൈപ്പോതലാമസിലാണ് നിർമ്മിക്കപ്പെടുന്നത്, പിറ്റ്യൂറ്ററിയുടെ പിൻദളമാണ് (Posterior Pituitary) ഇവയെ സംഭരിച്ച് പുറത്തുവിടുന്നത്[cite: 13]. 1, 3 ശരിയാണ്[cite: 13]." },
+      { q: "രക്തത്തിലെ ഗ്ലൂക്കോസിന്റെ അളവ് നിയന്ത്രിക്കുന്ന ഇൻസുലിൻ ഹോർമോൺ ഉൽപ്പാദിപ്പിക്കുന്നത് പാൻക്രിയാസിലെ ഏത് കോശങ്ങളാണ്?", options: ["ആൽഫാ കോശങ്ങൾ", "ബീറ്റാ കോശങ്ങൾ", "ഡെൽറ്റാ കോശങ്ങൾ", "അസിനാർ കോശങ്ങൾ"], ans: 1, exp: "പാൻക്രിയാസിലെ ഐലറ്റ്സ് ഓഫ് ലാംഗർഹാൻസിലെ ബീറ്റാ കോശങ്ങളാണ് (Beta cells) ഇൻസുലിൻ ഉൽപ്പാദിപ്പിക്കുന്നത്[cite: 13]. ആൽഫാ കോശങ്ങൾ ഗ്ലൂക്കഗോൺ ഉൽപ്പാദിപ്പിക്കുന്നു[cite: 13]." },
+      { q: "ഇൻസുലിൻ, ഗ്ലൂക്കഗോൺ ഹോർമോണുകളുടെ പ്രവർത്തനങ്ങളെക്കുറിച്ചുള്ള പ്രസ്താവനകൾ ഏവ?\n1. രക്തത്തിലെ അധിക ഗ്ലൂക്കോസിനെ ഗ്ലൈക്കോജനാക്കി മാറ്റി കരളിലും പേശികളിലും സംഭരിക്കാൻ ഇൻസുലിൻ സഹായിക്കുന്നു.\n2. രക്തത്തിൽ ഗ്ലൂക്കോസ് കുറയുമ്പോൾ ഗ്ലൈക്കോജനെ തിരികെ ഗ്ലൂക്കോസാക്കി മാറ്റുന്നത് ഗ്ലൂക്കഗോൺ ആണ്.\n3. ഇൻസുലിൻ കുറയുമ്പോൾ രക്തത്തിലെ പഞ്ചസാരയുടെ അളവ് ഗണ്യമായി താഴുന്നു.", options: ["1, 3 ശരിയാണ്", "1, 2 ശരിയാണ്", "2, 3 ശരിയാണ്", "എല്ലാ പ്രസ്താവനകളും ശരിയാണ്"], ans: 1, exp: "മൂന്നാമത്തെ പ്രസ്താവന തെറ്റാണ്[cite: 13]. ഇൻസുലിൻ കുറയുമ്പോൾ ഗ്ലൂക്കോസ് കോശങ്ങളിലേക്ക് ആഗിരണം ചെയ്യപ്പെടാതെ രക്തത്തിൽ പഞ്ചസാര കൂടുകയാണ് ചെയ്യുന്നത് (ഡയബറ്റിസ് മെല്ലിറ്റസ്)[cite: 13]. 1, 2 ശരിയാണ്[cite: 13]." },
+      { q: "ഡയബറ്റിസ് ഇൻസിപ്പിഡസും ഡയബറ്റിസ് മെല്ലിറ്റസും സംബന്ധിച്ച പ്രസ്താവനകൾ ഏവ?\n1. രക്തത്തിൽ ഗ്ലൂക്കോസ് വർദ്ധിക്കുന്ന അവസ്ഥയാണ് ഡയബറ്റിസ് മെല്ലിറ്റസ് (മധുമൂത്രം).\n2. വാസോപ്രസ്സിൻ അഥവാ ആന്റി ഡൈയൂററ്റിക് ഹോർമോണിന്റെ (ADH) കുറവുമൂലം അമിതമായി മൂത്രം പോകുന്ന അവസ്ഥയാണ് ഡയബറ്റിസ് ഇൻസിപ്പിഡസ്.\n3. ഡയബറ്റിസ് ഇൻസിപ്പിഡസ് രോഗിയുടെ മൂത്രത്തിൽ വലിയ അളവിൽ പഞ്ചസാര കാണപ്പെടുന്നു.", options: ["1, 3 ശരിയാണ്", "1, 2 ശരിയാണ്", "2, 3 ശരിയാണ്", "എല്ലാ പ്രസ്താവനകളും ശരിയാണ്"], ans: 1, exp: "മൂന്നാമത്തെ പ്രസ്താവന തെറ്റാണ്[cite: 13]. ഡയബറ്റിസ് ഇൻസിപ്പിഡസ് രോഗിയുടെ മൂത്രത്തിൽ പഞ്ചസാര ഉണ്ടാകില്ല (വെള്ളം അമിതമായി പുറത്തുപോവുക മാത്രമാണ് ചെയ്യുന്നത്)[cite: 13]. 1, 2 ശരിയാണ്[cite: 13]." },
+      { q: "ശരീരത്തിന്റെ ഉപാപചയ പ്രവർത്തനങ്ങളെ നിയന്ത്രിക്കുന്ന തൈറോക്സിൻ ഹോർമോണിന്റെ നിർമ്മാണത്തിന് ആവശ്യമായ പ്രധാന ധാതു ഏതാണ്?", options: ["ഇരുമ്പ്", "അയോഡിൻ", "കാൽസ്യം", "ഫോസ്ഫറസ്"], ans: 1, exp: "തൈറോയ്ഡ് ഗ്രന്ഥിയിൽ തൈറോക്സിൻ ഉൽപ്പാദിപ്പിക്കാൻ അയോഡിൻ (Iodine) അത്യന്താപേക്ഷിതമാണ്[cite: 13]. അയോഡിന്റെ കുറവ് ഗോയിറ്റർ രോഗത്തിന് കാരണമാകുന്നു[cite: 13]." },
+      { q: "പാരതൈറോയ്ഡ് ഗ്രന്ഥിയെയും കാൽസ്യ സന്തുലനത്തെയും സംബന്ധിച്ച പ്രസ്താവനകൾ ഏവ?\n1. തൈറോയ്ഡ് ഗ്രന്ഥിയുടെ പിൻഭാഗത്ത് കാണപ്പെടുന്ന നാല് ചെറിയ ഗ്രന്ഥികളാണ് പാരതൈറോയ്ഡ് ഗ്രന്ഥികൾ.\n2. രക്തത്തിൽ കാൽസ്യത്തിന്റെ അളവ് കുറയുമ്പോൾ അസ്ഥികളിൽ നിന്നും കാൽസ്യത്തെ രക്തത്തിലേക്ക് ഇറക്കി അളവ് കൂട്ടുന്നത് പാരതോർമോൺ ആണ്.\n3. രക്തത്തിലെ കാൽസ്യം കുറയ്ക്കാൻ സഹായിക്കുന്നത് അഡ്രിനാലിൻ ആണ്.", options: ["1, 2 ശരിയാണ്", "1, 3 ശരിയാണ്", "2, 3 ശരിയാണ്", "എല്ലാ പ്രസ്താവനകളും ശരിയാണ്"], ans: 0, exp: "മൂന്നാമത്തെ പ്രസ്താവന തെറ്റാണ്[cite: 13]. രക്തത്തിലെ കാൽസ്യം അധികമാകുമ്പോൾ അത് കുറയ്ക്കുന്നത് തൈറോയ്ഡ് ഉൽപ്പാദിപ്പിക്കുന്ന കാൽസിടോണിൻ (Calcitonin) ആണ്[cite: 13]. 1, 2 ശരിയാണ്[cite: 13]." },
+      { q: "അടിയന്തര ഘട്ടങ്ങളിൽ ഭയം, ദേഷ്യം, പരിഭ്രാന്തി എന്നിവ ഉണ്ടാകുമ്പോൾ ശരീരം സജ്ജമാക്കാൻ പുറപ്പെടുവിക്കുന്ന 'പോരാടുക അല്ലെങ്കിൽ പലായനം ചെയ്യുക' (Fight or Flight) ഹോർമോൺ ഏത്?", options: ["ഇൻസുലിൻ", "എപ്പിനെഫ്രിൻ അഥവാ അഡ്രിനാലിൻ", "ഈസ്ട്രജൻ", "തൈറോക്സിൻ"], ans: 1, exp: "അഡ്രിനൽ മെഡുല്ല ഉൽപ്പാദിപ്പിക്കുന്ന അഡ്രിനാലിൻ (Adrenaline / Epinephrine) ആണ് അടിയന്തര ഹോർമോൺ എന്നറിയപ്പെടുന്നത്[cite: 13]." },
+      { q: "തൈമസ് ഗ്രന്ഥിയെക്കുറിച്ചുള്ള പ്രസ്താവനകൾ പരിശോധിക്കുക:\n1. മാറെല്ലിന് പിന്നിലായി ഹൃദയത്തിന് മുകളിൽ സ്ഥിതിചെയ്യുന്ന ഗ്രന്ഥിയാണിത്.\n2. പ്രായപൂർത്തിയാകുന്തോറും വലിപ്പം ക്രമാതീതമായി വർദ്ധിച്ചുവരുന്ന ഗ്രന്ഥിയാണിത്.\n3. ശരീരത്തിന്റെ രോഗപ്രതിരോധത്തിൽ ടി-ലിംഫോസൈറ്റുകളെ പക്വതപ്പെടുത്തുന്നത് ഈ ഗ്രന്ഥി സ്രവിക്കുന്ന തൈമോസിൻ ഹോർമോൺ ആണ്.", options: ["1, 2 ശരിയാണ്", "1, 3 ശരിയാണ്", "2, 3 ശരിയാണ്", "എല്ലാ പ്രസ്താവനകളും ശരിയാണ്"], ans: 1, exp: "രണ്ടാമത്തെ പ്രസ്താവന തെറ്റാണ്[cite: 13]. കുട്ടിക്കാലത്ത് വലുതായിരിക്കുകയും പ്രായപൂർത്തിയാകുമ്പോൾ ചുരുങ്ങി ചെറുതായി മാറുകയും ചെയ്യുന്ന ഗ്രന്ഥിയാണ് തൈമസ്[cite: 13]. 1, 3 ശരിയാണ്[cite: 13]." },
+      { q: "നാഡീകോശത്തിന്റെ (Neuron) ഘടനയെക്കുറിച്ചുള്ള പ്രസ്താവനകൾ ഏവ?\n1. കോശശരീരത്തിൽ നിന്ന് ആവേഗങ്ങളെ സ്വീകരിക്കുന്ന ശാഖകളാണ് ഡെൻഡ്രൈറ്റുകൾ.\n2. കോശശരീരത്തിൽ നിന്നും ആവേഗങ്ങളെ മറ്റ് കോശങ്ങളിലേക്ക് കൊണ്ടുപോകുന്ന നീളമുള്ള തന്തുവാണ് ആക്സോൺ.\n3. ആക്സോണിനെ പൊതിഞ്ഞു സൂക്ഷിക്കുന്ന കൊഴുപ്പ് ആവരണമാണ് മയലിൻ ഷീത്ത് (Myelin Sheath).", options: ["1, 2 ശരിയാണ്", "2, 3 ശരിയാണ്", "1, 3 ശരിയാണ്", "1, 2, 3 പ്രസ്താവനകളും ശരിയാണ്"], ans: 3, exp: "ന്യൂറോണിന്റെ പ്രധാന ഭാഗങ്ങളായ ഡെൻഡ്രൈറ്റ്, ആക്സോൺ, മയലിൻ ഷീത്ത് എന്നിവയുടെ സവിശേഷതകൾ വ്യക്തമാക്കുന്ന മൂന്ന് പ്രസ്താവനകളും ശരിയാണ്[cite: 13]." },
+      { q: "മനുഷ്യശരീരത്തിലെ ജൈവഘടികാരത്തെ (ഉറക്ക-ഉണരൽ ചക്രം) നിയന്ത്രിക്കുന്ന മെലറ്റോണിൻ ഹോർമോൺ സ്രവിക്കുന്ന ഗ്രന്ഥി ഏതാണ്?", options: ["തൈമസ് ഗ്രന്ഥി", "പീനിയൽ ഗ്രന്ഥി", "തൈറോയ്ഡ് ഗ്രന്ഥി", "പീയൂഷ ഗ്രന്ഥി"], ans: 1, exp: "തലച്ചോറിന്റെ മധ്യഭാഗത്തുള്ള പീനിയൽ ഗ്രന്ഥിയാണ് (Pineal Gland) മെലറ്റോണിൻ ഉൽപ്പാദിപ്പിച്ച് സിർകാഡിയൻ റിഥം അഥവാ ഉറക്കത്തെ നിയന്ത്രിക്കുന്നത്[cite: 13]." },
+      { q: "സിനാപ്സിനെക്കുറിച്ചുള്ള (Synapse) പ്രസ്താവനകൾ പരിശോധിക്കുക:\n1. രണ്ട് ന്യൂറോണുകൾ തമ്മിലോ ന്യൂറോണും പേശിയും തമ്മിലോ സന്ധിക്കുന്ന സമ്പർക്ക മേഖലയാണ് സിനാപ്സ്.\n2. അസറ്റൈൽ കോളിൻ, ഡോപമിൻ എന്നിവ സിനാപ്സിലൂടെ ആവേഗങ്ങൾ കൈമാറാൻ സഹായിക്കുന്ന ന്യൂറോട്രാൻസ്മിറ്ററുകളാണ്.\n3. സിനാപ്സിലൂടെ ആവേഗങ്ങൾ ഇരുദിശകളിലേക്കും ഒരേ വേഗതയിൽ തിരിച്ചു സഞ്ചരിക്കുന്നു.", options: ["1, 2 ശരിയാണ്", "1, 3 ശരിയാണ്", "2, 3 ശരിയാണ്", "എല്ലാ പ്രസ്താവനകളും ശരിയാണ്"], ans: 0, exp: "മൂന്നാമത്തെ പ്രസ്താവന തെറ്റാണ്[cite: 13]. രാസ തന്മാത്രകൾ വഴി ആവേഗം സിനാപ്റ്റിക് നോബിൽ നിന്ന് അടുത്ത ന്യൂറോണിലേക്ക് ഒരു ദിശയിൽ മാത്രമേ സഞ്ചരിക്കൂ (Unidirectional)[cite: 13]. 1, 2 ശരിയാണ്[cite: 13]." }
+    ];
+
+    let currentUser = null;
+    let currentIndex = 0;
+    let userAnswers = new Array(questionsData.length).fill(null);
+
+    // 25 Minutes Countdown Timer (25 * 60 seconds)
+    let timeLeft = 25 * 60;
+    let timerInterval = null;
+
+    const loginCard = document.getElementById('loginCard');
+    const quizScreen = document.getElementById('quizScreen');
+    const resultScreen = document.getElementById('resultScreen');
+
+    function startTimer() {
+      const timerDisplay = document.getElementById('examTimer');
+      timerInterval = setInterval(() => {
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          alert('അനുവദിച്ച 25 മിനിറ്റ് സമയം പൂർത്തിയായിരിക്കുന്നു! പരീക്ഷ തനിയെ സബ്മിറ്റ് ചെയ്യുന്നു.');
+          finishExam();
+          return;
+        }
+
+        timeLeft--;
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+
+        const mStr = minutes < 10 ? '0' + minutes : minutes;
+        const sStr = seconds < 10 ? '0' + seconds : seconds;
+        timerDisplay.innerText = `${mStr}:${sStr}`;
+
+        // Turn red during the last 3 minutes (180 seconds)
+        if (timeLeft <= 180) {
+          timerDisplay.classList.remove('text-emerald-400');
+          timerDisplay.classList.add('text-rose-500', 'animate-pulse');
+        }
+      }, 1000);
+    }
+
+    function renderQuestion(index) {
+      const q = questionsData[index];
+      document.getElementById('questionBadge').innerText = `ചോദ്യം ${index + 1} / ${questionsData.length}`;
+      document.getElementById('qText').innerText = `${index + 1}. ${q.q}`;
+
+      const optionsDiv = document.getElementById('optionsContainer');
+      optionsDiv.innerHTML = '';
+      const letters = ['A', 'B', 'C', 'D'];
+
+      q.options.forEach((opt, idx) => {
+        const isSelected = userAnswers[index] === idx;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `w-full text-left p-4 rounded-xl border transition flex items-start space-x-3 ${
+          isSelected 
+            ? 'bg-emerald-500/20 border-emerald-500 text-emerald-200 ring-1 ring-emerald-500' 
+            : 'bg-slate-900/60 border-slate-700 hover:bg-slate-700/50 text-slate-200'
+        }`;
+        btn.innerHTML = `
+          <span class="w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold ${
+            isSelected ? 'bg-emerald-500 text-slate-950 font-black' : 'bg-slate-800 text-slate-400'
+          }">${letters[idx]}</span>
+          <span class="text-sm sm:text-base leading-relaxed mt-0.5">${opt}</span>
+        `;
+        btn.onclick = () => {
+          userAnswers[index] = idx;
+          renderQuestion(index);
+        };
+        optionsDiv.appendChild(btn);
+      });
+
+      document.getElementById('prevBtn').disabled = (index === 0);
+      document.getElementById('nextBtn').innerText = (index === questionsData.length - 1) ? "സബ്മിറ്റ് ചെയ്യുക ✓" : "Next ›";
+      const answered = userAnswers.filter(a => a !== null).length;
+      document.getElementById('answeredCountTxt').innerText = `പൂർത്തിയാക്കിയത്: ${answered}/${questionsData.length}`;
+      updatePalette();
+    }
+
+    function buildPalette() {
+      const pal = document.getElementById('paletteContainer');
+      pal.innerHTML = '';
+      for (let i = 0; i < questionsData.length; i++) {
+        const b = document.createElement('button');
+        b.id = `pal-${i}`;
+        b.innerText = i + 1;
+        b.className = 'w-7 h-7 rounded text-[11px] font-bold flex items-center justify-center border transition';
+        b.onclick = () => { currentIndex = i; renderQuestion(currentIndex); };
+        pal.appendChild(b);
+      }
+      updatePalette();
+    }
+
+    function updatePalette() {
+      for (let i = 0; i < questionsData.length; i++) {
+        const b = document.getElementById(`pal-${i}`);
+        if (!b) continue;
+        if (i === currentIndex) {
+          b.className = 'w-7 h-7 rounded text-[11px] font-black border border-emerald-400 bg-emerald-400 text-slate-950';
+        } else if (userAnswers[i] !== null) {
+          b.className = 'w-7 h-7 rounded text-[11px] font-semibold border border-emerald-500/50 bg-emerald-950/60 text-emerald-400';
+        } else {
+          b.className = 'w-7 h-7 rounded text-[11px] font-medium border border-slate-700 bg-slate-900 text-slate-400';
+        }
+      }
+    }
+
+    document.getElementById('nextBtn').onclick = () => {
+      if (currentIndex < questionsData.length - 1) {
+        currentIndex++;
+        renderQuestion(currentIndex);
+      } else {
+        finishExam();
+      }
+    };
+
+    document.getElementById('prevBtn').onclick = () => {
+      if (currentIndex > 0) { currentIndex--; renderQuestion(currentIndex); }
+    };
+
+    document.getElementById('skipBtn').onclick = () => {
+      userAnswers[currentIndex] = null;
+      if (currentIndex < questionsData.length - 1) {
+        currentIndex++;
+        renderQuestion(currentIndex);
+      } else {
+        finishExam();
+      }
+    };
+
+    document.getElementById('finishMidBtn').onclick = () => {
+      const answered = userAnswers.filter(a => a !== null).length;
+      if (confirm(`നിങ്ങൾ 25-ൽ ${answered} ചോദ്യങ്ങൾക്ക് മാത്രമാണ് ഉത്തരം നൽകിയത്. ഇപ്പോൾ പരീക്ഷ അവസാനിപ്പിക്കണമെന്നുറപ്പാണോ?`)) {
+        finishExam();
+      }
+    };
+
+    function finishExam() {
+      if (timerInterval) clearInterval(timerInterval);
+
+      let correct = 0, wrong = 0, skipped = 0;
+      for (let i = 0; i < questionsData.length; i++) {
+        if (userAnswers[i] === null) skipped++;
+        else if (userAnswers[i] === questionsData[i].ans) correct++;
+        else wrong++;
+      }
+
+      let netScore = (correct * 1.0) - (wrong * 0.33333333);
+      if (netScore < 0) netScore = 0;
+      const formattedScore = netScore.toFixed(2);
+      const scoreNum = parseFloat(formattedScore);
+
+      document.getElementById('finalScore').innerText = formattedScore;
+      document.getElementById('correctCount').innerText = correct;
+      document.getElementById('wrongCount').innerText = wrong;
+      document.getElementById('skipCount').innerText = skipped;
+      document.getElementById('resultCandidateInfo').innerText = `പരീക്ഷാർത്ഥി: ${currentUser.name} | മൊബൈൽ: ${currentUser.phone}`;
+      document.getElementById('pdfReportCandidateSubheader').innerText = `പരീക്ഷാർത്ഥി: ${currentUser.name} (${currentUser.phone}) | സ്കോർ: ${formattedScore} / 25 | ശരി: ${correct} | തെറ്റ്: ${wrong} | Skip: ${skipped}`;
+
+      // 7 Marks Minimum Condition for Original PDF Download
+      const downloadBtn = document.getElementById('originalPdfDownloadLink');
+      const lockNotice = document.getElementById('pdfLockNotice');
+
+      if (scoreNum >= 7.0) {
+        downloadBtn.href = ORIGINAL_PDF_URL;
+        downloadBtn.classList.remove('hidden');
+        lockNotice.classList.add('hidden');
+      } else {
+        downloadBtn.classList.add('hidden');
+        lockNotice.classList.remove('hidden');
+      }
+
+      renderSolutions();
+      quizScreen.classList.add('hidden');
+      resultScreen.classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Save to Google Sheets (Targeting Specific Tab: Biology_Set1)
+      sendResultToGoogleSheet({
+        name: currentUser.name,
+        phone: currentUser.phone,
+        score: formattedScore,
+        correct: correct,
+        wrong: wrong,
+        skipped: skipped
+      });
+    }
+
+    function sendResultToGoogleSheet(payload) {
+      const statusDiv = document.getElementById('sheetStatus');
+      if (!GOOGLE_SHEET_WEBAPP_URL || GOOGLE_SHEET_WEBAPP_URL.includes("YOUR_APPS_SCRIPT_WEBAPP_URL_HERE")) {
+        statusDiv.innerText = "Google Sheet ലിങ്ക് നൽകിയിട്ടില്ല (മാർക്ക് മുകളിൽ ലഭ്യമാണ്).";
+        statusDiv.classList.remove('animate-pulse');
+        return;
+      }
+
+      payload.sheetName = QUIZ_SHEET_NAME;
+
+      fetch(GOOGLE_SHEET_WEBAPP_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(() => {
+        statusDiv.innerText = `✓ മാർക്ക് '${QUIZ_SHEET_NAME}' എന്ന ഷീറ്റ് ടാബിലേക്ക് രേഖപ്പെടുത്തി!`;
+        statusDiv.className = "text-xs text-emerald-400 mb-4";
+      })
+      .catch(() => {
+        statusDiv.innerText = "ഡാറ്റ സേവ് ചെയ്യുന്നതിൽ ചെറിയ തടസ്സം നേരിട്ടു.";
+        statusDiv.className = "text-xs text-rose-400 mb-4";
+      });
+    }
+
+    function renderSolutions() {
+      const cont = document.getElementById('solutionsContainer');
+      cont.innerHTML = '';
+      const letters = ['A', 'B', 'C', 'D'];
+
+      questionsData.forEach((q, idx) => {
+        const uAns = userAnswers[idx];
+        const isCorrect = uAns === q.ans;
+        const isSkipped = uAns === null;
+
+        let badge = isSkipped 
+          ? '<span class="px-2 py-0.5 rounded text-xs bg-slate-700 text-slate-300">Skipped (മാർക്ക് മാറ്റമില്ല)</span>'
+          : isCorrect 
+          ? '<span class="px-2 py-0.5 rounded text-xs bg-emerald-950 text-emerald-400 border border-emerald-800 font-bold">+1.00 Mark (ശരിയുത്തരം)</span>'
+          : '<span class="px-2 py-0.5 rounded text-xs bg-rose-950 text-rose-400 border border-rose-800 font-bold">-0.33 Mark (തെറ്റ്)</span>';
+
+        let optsHtml = '<div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">';
+        q.options.forEach((opt, oIdx) => {
+          let c = 'p-2.5 rounded-lg text-xs flex items-center space-x-2 border ';
+          if (oIdx === q.ans) c += 'border-emerald-500 bg-emerald-950/40 text-emerald-300 font-semibold';
+          else if (oIdx === uAns && !isCorrect) c += 'border-rose-500 bg-rose-950/40 text-rose-300 line-through';
+          else c += 'border-slate-800 text-slate-400';
+
+          optsHtml += `
+            <div class="${c}">
+              <span class="font-bold">${letters[oIdx]})</span>
+              <span>${opt}</span>
+              ${oIdx === q.ans ? '<span class="ml-auto text-emerald-400 font-bold">✓ ശരി</span>' : ''}
+              ${oIdx === uAns && !isCorrect ? '<span class="ml-auto text-rose-400 font-bold">✗ നിങ്ങൾ തിരഞ്ഞെടുത്തത്</span>' : ''}
+            </div>
+          `;
+        });
+        optsHtml += '</div>';
+
+        const item = document.createElement('div');
+        item.className = 'p-4 rounded-xl border border-slate-700 bg-slate-900/70 space-y-2';
+        item.innerHTML = `
+          <div class="flex justify-between items-start gap-2">
+            <span class="font-bold text-emerald-400 text-sm">ചോദ്യം ${idx + 1}</span>
+            <div>${badge}</div>
+          </div>
+          <p class="text-sm font-medium text-slate-200 whitespace-pre-line">${q.q}</p>
+          ${optsHtml}
+          <div class="bg-slate-800/90 p-3 rounded-lg border border-slate-700 mt-2 text-xs leading-relaxed">
+            <span class="font-bold text-emerald-300">വിശദീകരണം:</span>
+            <span class="text-slate-300 ml-1">${q.exp}</span>
+          </div>
+        `;
+        cont.appendChild(item);
+      });
+    }
+
+    // Direct Scorecard PDF Download
+    document.getElementById('downloadPdfBtn').addEventListener('click', () => {
+      const element = document.getElementById('pdfExportWrapper');
+      const opt = {
+        margin:       [10, 10, 10, 10],
+        filename:     `${currentUser.name}_Biology_Set1_Scorecard.pdf`,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true, backgroundColor: '#1e293b' },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+
+      const btn = document.getElementById('downloadPdfBtn');
+      btn.innerText = 'PDF തയ്യാറാക്കുന്നു...';
+      btn.disabled = true;
+
+      html2pdf().set(opt).from(element).save().then(() => {
+        btn.innerHTML = `
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+          <span>PDF ഡൗൺലോഡ് ആയി!</span>
+        `;
+        setTimeout(() => {
+          btn.innerHTML = `
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+            <span>സ്കോർകാർഡ് PDF</span>
+          `;
+          btn.disabled = false;
+        }, 3000);
+      });
+    });
+
+    // Fetch Live Leaderboard from Google Sheets (Filtered by Tab Name: Biology_Set1)
+    function fetchLiveLeaderboard() {
+      const modal = document.getElementById('leaderboardModal');
+      const loader = document.getElementById('leaderboardLoading');
+      const wrapper = document.getElementById('leaderboardTableWrapper');
+      const tbody = document.getElementById('leaderboardBody');
+
+      modal.classList.remove('hidden');
+      loader.classList.remove('hidden');
+      wrapper.classList.add('hidden');
+      tbody.innerHTML = '';
+
+      if (!GOOGLE_SHEET_WEBAPP_URL || GOOGLE_SHEET_WEBAPP_URL.includes("YOUR_APPS_SCRIPT_WEBAPP_URL_HERE")) {
+        loader.innerText = "Google Apps Script URL സെറ്റ് ചെയ്തിട്ടില്ല.";
+        return;
+      }
+
+      fetch(`${GOOGLE_SHEET_WEBAPP_URL}?sheet=${encodeURIComponent(QUIZ_SHEET_NAME)}`)
+        .then(res => res.json())
+        .then(data => {
+          loader.classList.add('hidden');
+          wrapper.classList.remove('hidden');
+
+          if (!data || data.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="4" class="py-6 text-center text-slate-500">ഇതുവരെ ആരും പരീക്ഷ പൂർത്തിയാക്കിയിട്ടില്ല.</td></tr>';
+            return;
+          }
+
+          data.sort((a, b) => b.score - a.score || b.correct - a.correct);
+
+          data.forEach((entry, idx) => {
+            const masked = entry.phone ? String(entry.phone).substring(0, 5) + '*****' : '---';
+            const row = document.createElement('tr');
+            row.className = 'hover:bg-slate-700/30 text-slate-300';
+            row.innerHTML = `
+              <td class="py-2.5 px-3 font-mono font-bold">${idx + 1}</td>
+              <td class="py-2.5 px-3 font-medium">${entry.name}</td>
+              <td class="py-2.5 px-3 font-mono text-xs text-slate-400">${masked}</td>
+              <td class="py-2.5 px-3 text-right font-mono font-bold text-emerald-400">${Number(entry.score).toFixed(2)}</td>
+            `;
+            tbody.appendChild(row);
+          });
+        })
+        .catch(() => {
+          loader.innerText = "റാങ്ക് ലിസ്റ്റ് ലോഡ് ചെയ്യാൻ കഴിഞ്ഞില്ല. ദയവായി അല്പം കഴിഞ്ഞ് ശ്രമിക്കുക.";
+        });
+    }
+
+    document.getElementById('loginForm').onsubmit = (e) => {
+      e.preventDefault();
+      const name = document.getElementById('candName').value.trim();
+      const phone = document.getElementById('candPhone').value.trim();
+
+      if (!name || phone.length !== 10) {
+        alert('ദയവായി ശരിയായ പേരും 10 അക്ക മൊബൈൽ നമ്പറും നൽകുക.');
+        return;
+      }
+
+      currentUser = { name, phone };
+      document.getElementById('displayUser').innerText = `${name} (${phone})`;
+      document.getElementById('userInfoHeader').classList.remove('hidden');
+
+      loginCard.classList.add('hidden');
+      quizScreen.classList.remove('hidden');
+      buildPalette();
+      renderQuestion(0);
+      startTimer();
+    };
+
+    document.getElementById('viewRankBtn').onclick = fetchLiveLeaderboard;
+    document.getElementById('showLeaderboardBtn').onclick = fetchLiveLeaderboard;
+    document.getElementById('closeLeaderboardBtn').onclick = () => {
+      document.getElementById('leaderboardModal').classList.add('hidden');
+    };
+    document.getElementById('closeLeaderboardBtn2').onclick = () => {
+      document.getElementById('leaderboardModal').classList.add('hidden');
+    };
+  </script>
+</body>
+</html>
